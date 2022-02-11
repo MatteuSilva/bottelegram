@@ -12,12 +12,13 @@ bot = telebot.TeleBot("5226426683:AAG8ZzGquH1SgDg9vMs7NZwf_UX_03e4CEM")
 # )
 # logger = logging.getLogger(__name__)
 
-@bot.message_handler(commands=['start'])
+@bot.message_handler(commands=['start','retornar'])
 def start(mensagem):
         bot.reply_to(mensagem, 'Olá, por favor selecione umas das opções:')
         bot.send_message(mensagem.chat.id, "/hosts")
         bot.send_message(mensagem.chat.id, "/templates")
         bot.send_message(mensagem.chat.id, "/grupodehosts")
+        bot.send_message(mensagem.chat.id, "/finalizar_bot")
 
 
 @bot.message_handler(commands=['hosts'])
@@ -32,32 +33,48 @@ def hosts(mensagem):
     for x in var_hosts:
         msg = "ID "+x['hostid']+" - "+"/"+x['host']
         bot.send_message(mensagem.chat.id, msg)
-    bot.send_message(mensagem.chat.id, "Posso ajudar em algo mais?")
-    bot.send_message(mensagem.chat.id, "/hosts")
-    bot.send_message(mensagem.chat.id, "/templates")
-    bot.send_message(mensagem.chat.id, "/grupodehosts")
+    bot.send_message(mensagem.chat.id, "/retornar")
     bot.send_message(mensagem.chat.id, "/finalizar_bot")
 
 @bot.message_handler(commands=['grupodehosts'])
-def hosts(mensagem):
-    var_hosts = zapi.hostgroup.get({
+def grupodehosts(mensagem):
+    var_grupo_hosts = zapi.hostgroup.get({
         "output":[
             "groupid",
             "name"
         ], 
         "sortfield":"groupid"
     })
-    for x in var_hosts:
+    for x in var_grupo_hosts:
         msg = "ID "+x['groupid']+" - "+"/"+x['name']
         bot.send_message(mensagem.chat.id, msg)
-    bot.send_message(mensagem.chat.id, "Posso ajudar em algo mais?")
-    bot.send_message(mensagem.chat.id, "/hosts")
-    bot.send_message(mensagem.chat.id, "/templates")
-    bot.send_message(mensagem.chat.id, "/grupodehosts")
+    bot.send_message(mensagem.chat.id, "/retornar")
     bot.send_message(mensagem.chat.id, "/finalizar_bot")
 
+@bot.message_handler(commands=['Servicos'])
+def servicos(mensagem):
+    var_hosts_servicos = zapi.host.get({
+        "output":[
+            "hostid",
+            "host"
+        ],
+        "search":{
+           "groups": [
+                {
+                    "groupid": "18"
+                }
+           ]
+        }   
+    })
+    for x in var_hosts_servicos:
+        msg = "ID "+x['hostid']+" - "+"/"+x['host']
+        bot.send_message(mensagem.chat.id, msg)
+    bot.send_message(mensagem.chat.id, "/retornar")
+    bot.send_message(mensagem.chat.id, "/finalizar_bot")
+
+
 @bot.message_handler(commands=['finalizar_bot'])
-def hosts(mensagem):
+def finalizar(mensagem):
     bot.send_message(mensagem.chat.id, "Ok, para reinicar o bot basta clicar em /start")
 
 bot.infinity_polling()
