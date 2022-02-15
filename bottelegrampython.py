@@ -58,15 +58,39 @@ def servicos(mensagem):
             "hostid",
             "host"
         ],
-        "search":{
-           "groups": [
-                {
-                    "groupid": "18"
-                }
-           ]
-        }   
+        "groupids":"18"   
     })
     for x in var_hosts_servicos:
+        msg = "ID "+x['hostid']+" - "+"/"+x['host']
+        bot.send_message(mensagem.chat.id, msg)
+    bot.send_message(mensagem.chat.id, "/retornar")
+    bot.send_message(mensagem.chat.id, "/finalizar_bot")
+
+@bot.message_handler(commands=['Backbone'])
+def backbone(mensagem):
+    var_hosts_backbone = zapi.host.get({
+        "output":[
+            "hostid",
+            "host"
+        ],
+        "groupids":"19"   
+    })
+    for x in var_hosts_backbone:
+        msg = "ID "+x['hostid']+" - "+"/"+x['host']
+        bot.send_message(mensagem.chat.id, msg)
+    bot.send_message(mensagem.chat.id, "/retornar")
+    bot.send_message(mensagem.chat.id, "/finalizar_bot")
+
+@bot.message_handler(commands=['SW_SURUBIM'])
+def backbone(mensagem):
+    var_hosts_swsurubim = zapi.host.get({
+        "filter":{
+            "host":[
+                "SW_SURUBIM"
+            ]
+        }   
+    })
+    for x in var_hosts_swsurubim:
         msg = "ID "+x['hostid']+" - "+"/"+x['host']
         bot.send_message(mensagem.chat.id, msg)
     bot.send_message(mensagem.chat.id, "/retornar")
