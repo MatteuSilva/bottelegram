@@ -1,9 +1,14 @@
+#!/usr/bin/python3
 import logging
 import telebot
+from telegram import Bot, InlineKeyboardButton, InlineKeyboardMarkup
+import sys
+
+
 
 from zabbix_api import ZabbixAPI
 zapi = ZabbixAPI(server='http://170.0.61.162/zabbix')
-zapi.login("Admin", "zabbix")
+zapi.login("Admin", "Mudar!@1020")
 
 bot = telebot.TeleBot("5226426683:AAG8ZzGquH1SgDg9vMs7NZwf_UX_03e4CEM")
 
@@ -95,7 +100,6 @@ def backbone(mensagem):
         bot.send_message(mensagem.chat.id, msg)
     bot.send_message(mensagem.chat.id, "/retornar")
     bot.send_message(mensagem.chat.id, "/finalizar_bot")
-
 
 @bot.message_handler(commands=['finalizar_bot'])
 def finalizar(mensagem):
