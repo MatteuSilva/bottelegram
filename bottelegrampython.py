@@ -7,8 +7,8 @@ import sys
 
 
 from zabbix_api import ZabbixAPI
-zapi = ZabbixAPI(server='http://170.0.61.162/zabbix')
-zapi.login("Admin", "Mudar!@1020")
+zapi = ZabbixAPI(server='http://zabbixaddress/zabbix')
+zapi.login("Admin", "zabbix")
 
 bot = telebot.TeleBot("5226426683:AAG8ZzGquH1SgDg9vMs7NZwf_UX_03e4CEM")
 
