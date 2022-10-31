@@ -5,7 +5,7 @@ from telegram import Bot, InlineKeyboardButton, InlineKeyboardMarkup
 import sys
 
 
-
+#Login
 from zabbix_api import ZabbixAPI
 zapi = ZabbixAPI(server='http://zabbixaddress/zabbix')
 zapi.login("Admin", "zabbix")
@@ -25,7 +25,7 @@ def start(mensagem):
         bot.send_message(mensagem.chat.id, "/grupodehosts")
         bot.send_message(mensagem.chat.id, "/finalizar_bot")
 
-
+#Reconhecer o comando na mensagem e restornar as opções
 @bot.message_handler(commands=['hosts'])
 def hosts(mensagem):
     var_hosts = zapi.host.get({
@@ -41,6 +41,7 @@ def hosts(mensagem):
     bot.send_message(mensagem.chat.id, "/retornar")
     bot.send_message(mensagem.chat.id, "/finalizar_bot")
 
+#Reconhecer o comando na mensagem e restornar as opções
 @bot.message_handler(commands=['grupodehosts'])
 def grupodehosts(mensagem):
     var_grupo_hosts = zapi.hostgroup.get({
@@ -56,6 +57,7 @@ def grupodehosts(mensagem):
     bot.send_message(mensagem.chat.id, "/retornar")
     bot.send_message(mensagem.chat.id, "/finalizar_bot")
 
+#Reconhecer o comando na mensagem e restornar as opções
 @bot.message_handler(commands=['Servicos'])
 def servicos(mensagem):
     var_hosts_servicos = zapi.host.get({
@@ -71,6 +73,7 @@ def servicos(mensagem):
     bot.send_message(mensagem.chat.id, "/retornar")
     bot.send_message(mensagem.chat.id, "/finalizar_bot")
 
+#Reconhecer o comando na mensagem e restornar as opções
 @bot.message_handler(commands=['Backbone'])
 def backbone(mensagem):
     var_hosts_backbone = zapi.host.get({
@@ -86,6 +89,7 @@ def backbone(mensagem):
     bot.send_message(mensagem.chat.id, "/retornar")
     bot.send_message(mensagem.chat.id, "/finalizar_bot")
 
+#Reconhecer o comando na mensagem e restornar as opções
 @bot.message_handler(commands=['SW_SURUBIM'])
 def backbone(mensagem):
     var_hosts_swsurubim = zapi.host.get({
@@ -101,8 +105,10 @@ def backbone(mensagem):
     bot.send_message(mensagem.chat.id, "/retornar")
     bot.send_message(mensagem.chat.id, "/finalizar_bot")
 
+#Encerrar o BOT
 @bot.message_handler(commands=['finalizar_bot'])
 def finalizar(mensagem):
     bot.send_message(mensagem.chat.id, "Ok, para reinicar o bot basta clicar em /start")
 
+#Looping na execução do bot
 bot.infinity_polling()
